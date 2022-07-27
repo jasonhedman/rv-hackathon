@@ -12,7 +12,9 @@ const Trade = () => {
   }
 
   return (
-    <VStack>
+    <VStack
+      spacing={8}
+    >
       <YourNFTs 
         contractAddress={contractAddress}
       />

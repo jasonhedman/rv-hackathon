@@ -8,12 +8,11 @@ import TokenABI from "../abis/Token.json";
 
 import { Token } from "./types";
 
-
 const useOwnedNFTs = (contractAddress: string, ownerAddress: string) => {
 
     const [ownedNFTs, setOwnedNFTs] = useState<Token[]>([]);
 
-    const { data: balanceOf, isError } = useContractRead({
+    const { data: balanceOf } = useContractRead({
         addressOrName: contractAddress,
         contractInterface: TokenABI,
         functionName: 'balanceOf',
