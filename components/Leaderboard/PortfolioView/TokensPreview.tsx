@@ -26,6 +26,7 @@ const TokensPreview : FC<Props> = ({ address }) => {
                                 key={`${nft.contractAddress}-${nft.tokenId}`}
                                 token={nft}
                                 width='75px'
+                                compact
                             />
                         ))
                     ) : (

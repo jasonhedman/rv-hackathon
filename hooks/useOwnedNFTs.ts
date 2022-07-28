@@ -48,6 +48,7 @@ const useOwnedNFTs = (contractAddress: string, ownerAddress: string) => {
                 name: metadata[i].name,
                 tokenId: tokenId && tokenId.toNumber(),
                 image: getLink(metadata[i].image),
+                symbol: metadata[i].attributes[0].value
             })))
         }
         if(ownedTokenIds && ownedTokenUris) {

@@ -20,6 +20,7 @@ const YourNFTs : FC<Props> = ({ contractAddress }) => {
                 ownedNFTs.length > 0 ? (
                     <SimpleGrid
                         columns={3}
+                        spacing={2}
                     >
                         {
                             ownedNFTs.map(nft => (

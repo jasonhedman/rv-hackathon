@@ -3,6 +3,7 @@ export interface Token {
     tokenId: number;
     image: string;
     name: string;
+    symbol: string;
 }
 
 export interface Portfolio {

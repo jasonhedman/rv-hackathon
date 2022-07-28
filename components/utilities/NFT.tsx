@@ -16,9 +16,10 @@ import {
     actionButtons?: React.ReactNode;
     infoDisplay?: React.ReactNode
     width?: string;
+    compact?: boolean
   }
   
-  const NFT : FC<Props> = ({ token, actionButtons, infoDisplay, width }) => {
+  const NFT : FC<Props> = ({ token, actionButtons, infoDisplay, width, compact }) => {
   
     const textColor = useColorModeValue("navy.700", "white");
     return (
@@ -46,7 +47,7 @@ import {
                         fontWeight='bold'
                         textAlign='center'
                     >
-                        {token.name}
+                        {compact ? token.symbol : token.name}
                     </Text>
                     {infoDisplay}
                     {actionButtons}
