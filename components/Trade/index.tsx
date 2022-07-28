@@ -1,15 +1,21 @@
 import { VStack } from '@chakra-ui/react';
-import React from 'react'
+import { FC } from 'react'
+import useSwap from '../../hooks/useSwap';
 import PoolNFTs from './PoolNFTs';
 import YourNFTs from './YourNFTs';
 
-const Trade = () => {
+interface Props {
+  contractAddress: string;
+}
 
-  const contractAddress = process.env.NEXT_PUBLIC_TOKEN_ADDRESS;
+const Trade : FC<Props> = ({ contractAddress }) => {
 
-  if(!contractAddress) {
-    return <div>No contract address</div>
-  }
+  const {
+    selectedOwnedTokens,
+    selectOwnedToken,
+    unselectOwnedToken,
+    swap
+  } = useSwap();
 
   return (
     <VStack
@@ -17,6 +23,10 @@ const Trade = () => {
     >
       <YourNFTs 
         contractAddress={contractAddress}
+        selectedTokens={selectedOwnedTokens}
+        selectToken={selectOwnedToken}
+        unselectToken={unselectOwnedToken}
+        swap={swap}
       />
       <PoolNFTs
         contractAddress={contractAddress}
