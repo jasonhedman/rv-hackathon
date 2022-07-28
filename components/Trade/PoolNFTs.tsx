@@ -19,6 +19,7 @@ const PoolNFTs : FC<Props> = ({ contractAddress }) => {
             <Heading>Pool NFTs</Heading>
             <SimpleGrid
                 columns={3}
+                spacing={2}
             >
                 {
                     ownedNFTs.map(nft => (

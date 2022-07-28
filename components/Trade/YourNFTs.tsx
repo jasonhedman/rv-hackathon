@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Heading, SimpleGrid, VStack } from '@chakra-ui/react'
+import { Heading, SimpleGrid, VStack, Text } from '@chakra-ui/react'
 
 import useUserNFTs from '../../hooks/useUserNFTs';
 import NFT from '../utilities/NFT';
@@ -16,18 +16,24 @@ const YourNFTs : FC<Props> = ({ contractAddress }) => {
     return (
         <VStack>
             <Heading>Your NFTs</Heading>
-            <SimpleGrid
-                columns={3}
-            >
-                {
-                    ownedNFTs.map(nft => (
-                        <NFT 
-                            key={`${nft.contractAddress}-${nft.tokenId}`}
-                            token={nft}
-                        />
-                    ))
-                }
-            </SimpleGrid>
+            {
+                ownedNFTs.length > 0 ? (
+                    <SimpleGrid
+                        columns={3}
+                    >
+                        {
+                            ownedNFTs.map(nft => (
+                                <NFT 
+                                    key={`${nft.contractAddress}-${nft.tokenId}`}
+                                    token={nft}
+                                />
+                            ))
+                        }
+                    </SimpleGrid>
+                ) : (
+                    <Text>You do not own any NFTs from this collection.</Text>
+                )
+            }
         </VStack>
     )
 }

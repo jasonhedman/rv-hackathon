@@ -41,7 +41,7 @@ const useOwnedNFTs = (contractAddress: string, ownerAddress: string) => {
     useEffect(() => {
         const getTokenMetadata = async () => {
             const metadata = await Promise.all((ownedTokenUris || []).map(async uri => (
-                fetch(getLink(String(uri))).then(res => res.json())
+                fetch(getLink(String(uri))).then(res => {console.log(res); return res.json()})
             )))
             setOwnedNFTs((ownedTokenIds || []).map((tokenId, i) => ({
                 contractAddress,

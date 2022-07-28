@@ -15,23 +15,22 @@ import {
     token: Token;
     actionButtons?: React.ReactNode;
     infoDisplay?: React.ReactNode
+    width?: string;
   }
   
-  const NFT : FC<Props> = ({ token, actionButtons, infoDisplay }) => {
+  const NFT : FC<Props> = ({ token, actionButtons, infoDisplay, width }) => {
   
     const textColor = useColorModeValue("navy.700", "white");
     return (
         <Card>
             <VStack 
                 spacing={4}
-                h='100%'
             >
                 <Image
                     alt="NFT image"
                     src={token.image}
-                    w="100%"
-                    h="100%"
                     borderRadius='20px'
+                    w={width || '100%'}
                 />
                 <VStack 
                     justify='space-between'
@@ -45,6 +44,7 @@ import {
                             "2xl": "xl",
                         }}
                         fontWeight='bold'
+                        textAlign='center'
                     >
                         {token.name}
                     </Text>

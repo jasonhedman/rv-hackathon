@@ -4,8 +4,8 @@ const routes = [
         href: '/',
     },
     {
-        name: 'Your Holdings',
-        href: '/account',
+        name: 'Leaderboard',
+        href: '/leaderboard',
     },
     {
         name: 'About',

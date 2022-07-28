@@ -4,3 +4,10 @@ export interface Token {
     image: string;
     name: string;
 }
+
+export interface Portfolio {
+    name: string;
+    tokenIds: number[];
+    change: number;
+    address: string;
+}
