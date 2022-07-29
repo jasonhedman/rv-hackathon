@@ -4,6 +4,7 @@ declare global {
         NEXT_PUBLIC_CHAIN_ID: string;
         NEXT_PUBLIC_TOKEN_ADDRESS: string;
         NEXT_PUBLIC_POOL_ADDRESS: string;
+        ALPHA_VANTAGE_API_KEY: string;
       }
     }
   }

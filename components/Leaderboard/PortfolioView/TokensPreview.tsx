@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { HStack, Text } from '@chakra-ui/react'
+import { VStack, HStack, Text } from '@chakra-ui/react'
 
-import NFT from '../../utilities/NFT';
+import TokenRow from './TokenRow';
 
 import useOwnedNFTs from '../../../hooks/useOwnedNFTs';
 
@@ -17,23 +17,24 @@ const TokensPreview : FC<Props> = ({ address }) => {
     return (
         <HStack
             justifyContent='center'
+            w='100%'
         >
-            <HStack>
+            <VStack
+                flex={1}
+            >
                 {
                     ownedNFTs.length > 0 ? (
                         ownedNFTs.map(nft => (
-                            <NFT
+                            <TokenRow
                                 key={`${nft.contractAddress}-${nft.tokenId}`}
                                 token={nft}
-                                width='75px'
-                                compact
                             />
                         ))
                     ) : (
                         <Text>No Tokens</Text>
                     )
                 }
-            </HStack>
+            </VStack>
         </HStack>
     )
 }

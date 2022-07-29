@@ -30,6 +30,9 @@ const PortfolioView : FC<Props> = ({ portfolio, place }) => {
     return (
         <Card
             w='100%'
+            display='flex'
+            flexDirection='column'
+            gap={4}
         >
             <HStack
                 spacing={4}

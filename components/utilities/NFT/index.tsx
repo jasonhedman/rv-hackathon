@@ -7,19 +7,21 @@ import {
     useColorModeValue,
   } from "@chakra-ui/react";
 
-  import Card from "./Card";
+  import Card from "../Card";
     
-  import { Token } from "../../hooks/types";
+  import { Token } from "../../../hooks/types";
+import AssetPrice from '../AssetPrice';
   
   interface Props {
     token: Token;
     actionButtons?: React.ReactNode;
     infoDisplay?: React.ReactNode
     width?: string;
-    compact?: boolean
+    compact?: boolean;
+    showPrice?: boolean
   }
   
-  const NFT : FC<Props> = ({ token, actionButtons, infoDisplay, width, compact }) => {
+  const NFT : FC<Props> = ({ token, actionButtons, infoDisplay, width, compact, showPrice }) => {
   
     const textColor = useColorModeValue("navy.700", "white");
     return (
@@ -49,6 +51,13 @@ import {
                     >
                         {compact ? token.symbol : token.name}
                     </Text>
+                    {
+                        showPrice && (
+                            <AssetPrice
+                                symbol={token.symbol}
+                            />
+                        )
+                    }
                     {infoDisplay}
                     {actionButtons}
                 </VStack>

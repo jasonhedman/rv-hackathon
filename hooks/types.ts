@@ -12,3 +12,8 @@ export interface Portfolio {
     change: number;
     address: string;
 }
+
+export interface AssetInfo {
+    price: number;
+    changePercent: number
+}
