@@ -2,10 +2,11 @@ import useOwnedNFTs from "./useOwnedNFTs";
 
 const usePoolNFTs = (contractAddress: string) => {
 
-    const { ownedNFTs } = useOwnedNFTs(contractAddress, String(process.env.NEXT_PUBLIC_POOL_ADDRESS));
+    const { ownedNFTs, loading } = useOwnedNFTs(contractAddress, String(process.env.NEXT_PUBLIC_POOL_ADDRESS));
 
     return { 
-        ownedNFTs 
+        ownedNFTs,
+        loading
     };
 }
 

@@ -1,63 +1,56 @@
 import { useEffect, useState } from "react";
 
-import { useContractRead, useContractReads } from "wagmi";
+import { useMoralis } from "react-moralis";
 
 import { getLink } from "../services/ipfs";
 
-import TokenABI from "../abis/Token.json";
-
 import { Token } from "./types";
+
+interface Attribute {
+    trait_type: string;
+    value: string;
+}
+
 
 const useOwnedNFTs = (contractAddress: string, ownerAddress: string) => {
 
+    const { Moralis } = useMoralis();
+
     const [ownedNFTs, setOwnedNFTs] = useState<Token[]>([]);
-
-    const { data: balanceOf } = useContractRead({
-        addressOrName: contractAddress,
-        contractInterface: TokenABI,
-        functionName: 'balanceOf',
-        args: [ownerAddress],
-        chainId: 4,
-    })
-
-    const { data: ownedTokenIds } = useContractReads({
-        contracts: Array.from(Array(balanceOf ? balanceOf.toNumber() : 0).keys()).map(index => ({
-            addressOrName: contractAddress,
-            contractInterface: TokenABI,
-            functionName: 'tokenOfOwnerByIndex',
-            args: [ownerAddress, index]
-        }))
-    })
-
-    const { data: ownedTokenUris } = useContractReads({
-        contracts: (ownedTokenIds || []).map(token => ({
-            addressOrName: contractAddress,
-            contractInterface: TokenABI,
-            functionName: 'tokenURI',
-            args: [token]
-        }))
-    })
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getTokenMetadata = async () => {
-            const metadata = await Promise.all((ownedTokenUris || []).map(async uri => (
-                fetch(getLink(String(uri))).then(res => res.json())
-            )))
-            setOwnedNFTs((ownedTokenIds || []).map((tokenId, i) => ({
-                contractAddress,
-                name: metadata[i].name,
-                tokenId: tokenId && tokenId.toNumber(),
-                image: getLink(metadata[i].image),
-                symbol: metadata[i].attributes[0].value
-            })))
+        const getTokens = async () => {
+            const nfts = await Moralis.Web3API.account.getNFTsForContract({
+                chain: "rinkeby",
+                address: ownerAddress,
+                token_address: contractAddress,
+            });
+            const metadata = await Promise.all((nfts?.result || []).map(async (nft) => {
+                return Moralis.Web3API.token.getTokenIdMetadata({
+                    chain: "rinkeby",
+                    address: contractAddress,
+                    token_id: nft.token_id,
+                })
+            }))
+            setOwnedNFTs(metadata.map((metadataObj) => {
+                const metadata = metadataObj.metadata ? JSON.parse(metadataObj.metadata) : {};
+                return {
+                    tokenId: parseInt(metadataObj.token_id),
+                    name: metadata.name || "",
+                    contractAddress,
+                    image: getLink(metadata.image) || "",
+                    symbol: metadata.attributes.find((attr : Attribute) => attr.trait_type === "symbol")?.value || "",
+                }
+            }))
+            setLoading(false);
         }
-        if(ownedTokenIds && ownedTokenUris) {
-            getTokenMetadata();
-        }
-    }, [ownedTokenIds, ownedTokenUris, contractAddress])
+        getTokens();
+    }, [contractAddress, ownerAddress]);
 
     return {
         ownedNFTs,
+        loading,
     };
 }
 

@@ -42,7 +42,7 @@ const Wallet = () => {
                                 connectors.map(connector => (
                                     <MenuItem 
                                         key={connector.name}
-                                        onClick={() => connectWallet(connector.connector)}
+                                        onClick={() => connectWallet(connector)}
                                     >
                                         {connector.name}
                                     </MenuItem>

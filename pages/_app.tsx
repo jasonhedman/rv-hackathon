@@ -4,30 +4,23 @@ import { ChakraProvider } from '@chakra-ui/react'
 import theme from '../theme/theme';
 import Layout from '../components/Layout';
 
-import { WagmiConfig, createClient, configureChains, chain } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { provider, webSocketProvider } = configureChains(
-  [chain.rinkeby],
-  [publicProvider()],
-)
-
-const client = createClient({
-  autoConnect: true,
-  provider,
-})
+import { MoralisProvider } from 'react-moralis';
 
 function MyApp({ Component, pageProps }: AppProps) {
+
   return (
-    <ChakraProvider
-      theme={theme}
+    <MoralisProvider
+      appId={process.env.NEXT_PUBLIC_APP_ID}
+      serverUrl={process.env.NEXT_PUBLIC_SERVER_URL}
     >
-      <WagmiConfig client={client}>
+      <ChakraProvider
+        theme={theme}
+      >
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </WagmiConfig>
-    </ChakraProvider>
+      </ChakraProvider>
+    </MoralisProvider>
   )
 }
 

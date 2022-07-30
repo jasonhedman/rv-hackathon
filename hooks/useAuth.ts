@@ -1,51 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { Connector, useAccount, useConnect } from 'wagmi'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { useMoralis } from "react-moralis";
+import { Moralis } from 'moralis';
 
-interface ConnectorOption {
+interface Connector {
     name: string;
-    connector: Connector
+    connectorId: Moralis.Web3ProviderType;
 }
 
-export const connectors : ConnectorOption[] = [
+export const connectors : Connector[] = [
     {
-        name: "MetaMask",
-        connector: new MetaMaskConnector()
-    },
-    {
-        name: "Coinbase Wallet",
-        connector: new CoinbaseWalletConnector({
-            options: {
-              appName: 'Decentralease',
-            },
-        })
+        name: "Metamask",
+        connectorId: "metamask",
     }
 ]
 
 
 const useAuth = () => {
 
-    const { address: addressWagmi } = useAccount()
-    const { connect } = useConnect()
+    const { authenticate, isAuthenticated, account, isWeb3EnableLoading, isWeb3Enabled, enableWeb3 } = useMoralis();
 
-    const [address, setAddress] = useState<string>("")
-
-    const connectWallet = (connector: Connector) => {
-        connect({
-            connector
+    const connectWallet = async (connector: Connector) => {
+        await authenticate({
+            provider: connector.connectorId
         })
+        window.localStorage.setItem("connectorId", connector.connectorId);
     }
 
     useEffect(() => {
-        if(addressWagmi) {
-            setAddress(addressWagmi)
-        }
-    }, [addressWagmi])
+        const connectorId = window.localStorage.getItem("connectorId");
+        if (connectorId && isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading)
+          enableWeb3({ provider: connectorId as Moralis.Web3ProviderType });
+      }, [isAuthenticated, isWeb3Enabled]);
 
     return {
-        address,
+        address: account,
         connectWallet,
     }
 }

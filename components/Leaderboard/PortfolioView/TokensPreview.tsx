@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { VStack, HStack, Text } from '@chakra-ui/react'
+import { VStack, HStack, Text, Skeleton } from '@chakra-ui/react'
 
 import TokenRow from './TokenRow';
 
@@ -12,30 +12,34 @@ interface Props {
 
 const TokensPreview : FC<Props> = ({ address }) => {
 
-    const { ownedNFTs } = useOwnedNFTs(process.env.NEXT_PUBLIC_TOKEN_ADDRESS, address);
+    const { ownedNFTs, loading } = useOwnedNFTs(process.env.NEXT_PUBLIC_TOKEN_ADDRESS, address);
 
     return (
-        <HStack
-            justifyContent='center'
-            w='100%'
+        <Skeleton
+            isLoaded={!loading}
         >
-            <VStack
-                flex={1}
+            <HStack
+                justifyContent='center'
+                w='100%'
             >
-                {
-                    ownedNFTs.length > 0 ? (
-                        ownedNFTs.map(nft => (
-                            <TokenRow
-                                key={`${nft.contractAddress}-${nft.tokenId}`}
-                                token={nft}
-                            />
-                        ))
-                    ) : (
-                        <Text>No Tokens</Text>
-                    )
-                }
-            </VStack>
-        </HStack>
+                <VStack
+                    flex={1}
+                >
+                    {
+                        ownedNFTs.length > 0 ? (
+                            ownedNFTs.map(nft => (
+                                <TokenRow
+                                    key={`${nft.contractAddress}-${nft.tokenId}`}
+                                    token={nft}
+                                />
+                            ))
+                        ) : (
+                            <Text>No Tokens</Text>
+                        )
+                    }
+                </VStack>
+            </HStack>
+        </Skeleton>
     )
 }
 

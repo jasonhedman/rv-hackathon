@@ -1,14 +1,15 @@
-import { useAccount } from "wagmi"
+import { useMoralis } from "react-moralis";
 import useOwnedNFTs from "./useOwnedNFTs";
 
 const useUserNFTs = (contractAddress: string) => {
 
-    const { address } = useAccount();
+    const { account } = useMoralis();
 
-    const { ownedNFTs } = useOwnedNFTs(contractAddress, String(address));
+    const { ownedNFTs, loading } = useOwnedNFTs(contractAddress, String(account));
 
     return {
-        ownedNFTs
+        ownedNFTs,
+        loading
     };
 
 }

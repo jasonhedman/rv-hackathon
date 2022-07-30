@@ -7,11 +7,11 @@ import {
   Button
 } from '@chakra-ui/react'
 
-import { useSwitchNetwork } from 'wagmi'
+import { useChain } from 'react-moralis'
 
 const WrongChain = () => {
 
-    const { switchNetwork } = useSwitchNetwork();
+    const { switchNetwork } = useChain();
 
     return (
         <VStack spacing={4}>
@@ -26,7 +26,7 @@ const WrongChain = () => {
             <Button
                 variant='solid'
                 colorScheme='brand'
-                onClick={() => switchNetwork && switchNetwork(parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "0"))}
+                onClick={() => switchNetwork(process.env.NEXT_PUBLIC_CHAIN_ID)}
             >
                 Switch Network
             </Button>
