@@ -29,6 +29,7 @@ const PageContainer : FC<Props> = ({ children }) => {
             flexDirection='column'
             py={navbarHeight}
             justifyContent='center'
+            maxW='2xl'
         >
             {
                 address ? (

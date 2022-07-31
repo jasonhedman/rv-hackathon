@@ -10,56 +10,66 @@ import SelectButton from './SelectButton';
 interface Props {
     contractAddress: string;
     selectedTokens: number[];
+    errorMessage: string;
     selectToken: (tokenId : number) => void;
     unselectToken: (tokenId : number) => void;
     swap: () => void
 }
 
-const YourNFTs : FC<Props> = ({ contractAddress, selectedTokens, selectToken, unselectToken, swap }) => {
+const YourNFTs : FC<Props> = ({ contractAddress, selectedTokens, errorMessage, selectToken, unselectToken, swap }) => {
 
     const { ownedNFTs, loading } = useUserNFTs(contractAddress);
 
     return (
         <VStack
             spacing={4}
+            w='100%'
         >
             <Heading>Your NFTs</Heading>
             <Skeleton
                 isLoaded={!loading}
+                w='100%'
             >
                 <VStack
                     spacing={4}
+                    w='100%'
                 >
                     {
                         ownedNFTs.length > 0 ? (
                             <>
-                                <SimpleGrid
-                                    columns={3}
-                                    spacing={2}
-                                >
-                                    {
-                                        ownedNFTs.map(nft => (
-                                            <NFT 
-                                                key={`${nft.contractAddress}-${nft.tokenId}`}
-                                                token={nft}
-                                                actionButtons={
-                                                    <SelectButton 
-                                                        selected={selectedTokens.includes(nft.tokenId)}
-                                                        selectToken={() => selectToken(nft.tokenId)}
-                                                        unselectToken={() => unselectToken(nft.tokenId)}
-                                                    />
-                                                }
-                                            />
-                                        ))
-                                    }
-                                </SimpleGrid>
-                                <Button
-                                    variant='solid'
-                                    colorScheme='brand'
-                                    onClick={swap}
-                                >
-                                    Swap
-                                </Button>
+                                {
+                                    ownedNFTs.map(nft => (
+                                        <NFT 
+                                            key={`${nft.contractAddress}-${nft.tokenId}`}
+                                            token={nft}
+                                            width='40px'
+                                            actionButtons={
+                                                <SelectButton 
+                                                    selected={selectedTokens.includes(nft.tokenId)}
+                                                    selectToken={() => selectToken(nft.tokenId)}
+                                                    unselectToken={() => unselectToken(nft.tokenId)}
+                                                />
+                                            }
+                                        />
+                                    ))
+                                }
+                                <VStack>
+                                    <Button
+                                        variant='solid'
+                                        colorScheme='brand'
+                                        onClick={swap}
+                                        disabled={errorMessage.length > 0}
+                                    >
+                                        Swap
+                                    </Button>
+                                    {errorMessage && (
+                                        <Text
+                                            color='red.700'
+                                        >
+                                            {errorMessage}
+                                        </Text>
+                                    )}
+                                </VStack>
                             </>
                         ) : (
                             <Text>You do not own any NFTs from this collection.</Text>

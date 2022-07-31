@@ -12,8 +12,12 @@ const Trade : FC<Props> = ({ contractAddress }) => {
 
   const {
     selectedOwnedTokens,
+    selectedPoolTokens,
+    errorMessage,
     selectOwnedToken,
     unselectOwnedToken,
+    selectPoolToken,
+    unselectPoolToken,
     swap
   } = useSwap();
 
@@ -26,10 +30,14 @@ const Trade : FC<Props> = ({ contractAddress }) => {
         selectedTokens={selectedOwnedTokens}
         selectToken={selectOwnedToken}
         unselectToken={unselectOwnedToken}
+        errorMessage={errorMessage}
         swap={swap}
       />
       <PoolNFTs
         contractAddress={contractAddress}
+        selectedTokens={selectedPoolTokens}
+        selectToken={selectPoolToken}
+        unselectToken={unselectPoolToken}
       />
     </VStack>
   )

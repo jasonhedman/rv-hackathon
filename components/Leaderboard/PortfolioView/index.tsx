@@ -9,6 +9,7 @@ import TokensPreview from './TokensPreview'
 import { getEllipsisTxt } from '../../../services/utils'
 
 import { Portfolio } from '../../../hooks/types'
+import { useMoralisCloudFunction, useMoralisQuery } from 'react-moralis'
 
 interface Props {
     portfolio: Portfolio;
@@ -23,9 +24,10 @@ const colors : {[key: string]: string} = {
 
 const PortfolioView : FC<Props> = ({ portfolio, place }) => {
 
-    const changeColor = portfolio.change > 0 ? 'green.500' : 'red.500';
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    const changeColor = portfolio.change > 0 ? 'green.500' : portfolio.change < 0 ? 'red.500' : 'gray.500';
 
     return (
         <Card
@@ -51,15 +53,18 @@ const PortfolioView : FC<Props> = ({ portfolio, place }) => {
                 <VStack
                     alignItems='flex-start'
                 >
-                    <Text
+                    {/* <Text
                         fontSize='lg'
                         fontWeight='bold'
                     >
                         {portfolio.name}
-                    </Text>
-                    <Text>{getEllipsisTxt(portfolio.address, 5)}</Text>
+                    </Text> */}
+                    <Text>{getEllipsisTxt(portfolio.userAddress, 5)}</Text>
                 </VStack>
                 <Box flex={1}/>
+                <Text>
+                    ${portfolio.value}
+                </Text>
                 <Text
                     color={changeColor}
                     fontWeight='bold'
@@ -75,7 +80,7 @@ const PortfolioView : FC<Props> = ({ portfolio, place }) => {
             {
                 isOpen && (
                     <TokensPreview 
-                        address={portfolio.address}
+                        address={portfolio.userAddress}
                     />
                 )
             }
