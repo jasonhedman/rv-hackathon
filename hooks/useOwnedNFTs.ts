@@ -4,12 +4,7 @@ import { useMoralis } from "react-moralis";
 
 import { getLink } from "../services/ipfs";
 
-import { Token } from "./types";
-
-interface Attribute {
-    trait_type: string;
-    value: string;
-}
+import { Token, Attribute } from "./types";
 
 
 const useOwnedNFTs = (contractAddress: string, ownerAddress: string) => {

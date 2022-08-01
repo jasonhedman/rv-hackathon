@@ -16,3 +16,8 @@ export interface AssetInfo {
     price: number;
     changePercent: number
 }
+
+export interface Attribute {
+    trait_type: string;
+    value: string;
+}

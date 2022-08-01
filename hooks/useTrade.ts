@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useSwap = () => {
+const useTrade = () => {
     
     const [selectedOwnedTokens, setSelectedOwnedTokens] = useState<number[]>([]);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -35,7 +35,7 @@ const useSwap = () => {
         }
     }, [selectedOwnedTokens, selectedPoolTokens]);
 
-    const swap = () => {
+    const trade = () => {
         console.log(selectedOwnedTokens, selectedPoolTokens);
     }
 
@@ -46,9 +46,9 @@ const useSwap = () => {
         selectedPoolTokens,
         selectPoolToken,
         unselectPoolToken,
-        swap,
+        trade,
         errorMessage
     }
 }
 
-export default useSwap;
+export default useTrade;

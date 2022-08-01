@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Heading, SimpleGrid, VStack, Text, Button, Skeleton } from '@chakra-ui/react'
+import { Heading, VStack, Text, Button, Skeleton } from '@chakra-ui/react'
 
 import useUserNFTs from '../../hooks/useUserNFTs';
 
@@ -13,10 +13,10 @@ interface Props {
     errorMessage: string;
     selectToken: (tokenId : number) => void;
     unselectToken: (tokenId : number) => void;
-    swap: () => void
+    trade: () => void
 }
 
-const YourNFTs : FC<Props> = ({ contractAddress, selectedTokens, errorMessage, selectToken, unselectToken, swap }) => {
+const YourNFTs : FC<Props> = ({ contractAddress, selectedTokens, errorMessage, selectToken, unselectToken, trade }) => {
 
     const { ownedNFTs, loading } = useUserNFTs(contractAddress);
 
@@ -57,7 +57,7 @@ const YourNFTs : FC<Props> = ({ contractAddress, selectedTokens, errorMessage, s
                                     <Button
                                         variant='solid'
                                         colorScheme='brand'
-                                        onClick={swap}
+                                        onClick={trade}
                                         disabled={errorMessage.length > 0}
                                     >
                                         Swap

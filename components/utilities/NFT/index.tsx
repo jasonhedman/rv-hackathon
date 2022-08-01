@@ -33,7 +33,7 @@ import AssetPrice from '../AssetPrice';
                     alt="NFT image"
                     src={token.image}
                     borderRadius='20px'
-                    w={width || '20px'}
+                    w={width || '40px'}
                 />
                 <Text
                     color={textColor}

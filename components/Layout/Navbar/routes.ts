@@ -1,7 +1,11 @@
 const routes = [
     {
-        name: 'Trade',
+        name: 'Trading Pool',
         href: '/',
+    },
+    {
+        name: 'Swap',
+        href: '/swap',
     },
     {
         name: 'Leaderboard',
