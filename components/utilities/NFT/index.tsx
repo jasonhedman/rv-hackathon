@@ -17,9 +17,10 @@ import AssetPrice from '../AssetPrice';
     token: Token;
     actionButtons?: React.ReactNode;
     width?: string;
+    compact?: boolean;
   }
   
-  const NFT : FC<Props> = ({ token, actionButtons, width }) => {
+  const NFT : FC<Props> = ({ token, actionButtons, width, compact }) => {
   
     const textColor = useColorModeValue("navy.700", "white");
     return (
@@ -42,13 +43,19 @@ import AssetPrice from '../AssetPrice';
                 >
                     {token.name} ({token.symbol})
                 </Text>
-                <Box 
-                    flex={1}
-                />
-                <AssetPrice
-                    symbol={token.symbol}
-                />
-                {actionButtons}
+                {
+                    !compact && (
+                        <>
+                            <Box 
+                                flex={1}
+                            />
+                            <AssetPrice
+                                symbol={token.symbol}
+                            />
+                            {actionButtons}
+                        </>
+                    )
+                }
             </HStack>
         </Card>
     );

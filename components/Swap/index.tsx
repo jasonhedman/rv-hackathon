@@ -3,6 +3,7 @@ import React from 'react'
 import { VStack } from '@chakra-ui/react'
 import UserNFTs from './UserNFTs'
 import TradingBlock from './TradingBlock'
+import ActiveSwaps from './ActiveSwaps'
 
 const SwapComponent = () => {
   return (
@@ -11,6 +12,7 @@ const SwapComponent = () => {
     >
         <UserNFTs />
         <TradingBlock />
+        <ActiveSwaps />
     </VStack>
   )
 }

@@ -47,17 +47,23 @@ const PortfolioView : FC<Props> = ({ portfolio, place }) => {
                     alignItems='center'
                     justifyContent='center'
                 >
-                    <Text>{place}</Text>
+                    <Text
+                        color={colors[String(place)] ? 'white' : 'grey.500'}
+                    >
+                        {place}
+                    </Text>
                 </Box>
                 <VStack
                     alignItems='flex-start'
                 >
-                    {/* <Text
-                        fontSize='lg'
-                        fontWeight='bold'
-                    >
-                        {portfolio.name}
-                    </Text> */}
+                    {portfolio.username !== portfolio.userAddress && (
+                        <Text
+                            fontSize='lg'
+                            fontWeight='bold'
+                        >
+                            {portfolio.username}
+                        </Text>
+                    )}
                     <Text>{getEllipsisTxt(portfolio.userAddress, 5)}</Text>
                 </VStack>
                 <Box flex={1}/>

@@ -46,14 +46,15 @@ const getUserPortfolioValue = async (userAddress) => {
   return getCurrentPortfolioValue(symbols);
 }
 
-const getUserPortfolioValueAndChange = async (userAddress) => {
+const getUserPortfolioValueAndChange = async (userAddress, username) => {
   const symbols = await getUserSymbols(userAddress);
   const open = await getOpenPortfolioValue(symbols);
   const value = await getCurrentPortfolioValue(symbols);
   return {
     value,
     change: round((value - open) / open, 4) || 0,
-    userAddress
+    userAddress,
+    username
   }
 }
 
@@ -71,6 +72,6 @@ const getPortfolioValues = async () => {
 const getPortfolioValuesAndChanges = async () => {
   const users = await getUsers();
   return Promise.all(users.map(async (user) => (
-    getUserPortfolioValueAndChange(user.get("ethAddress"))
+    getUserPortfolioValueAndChange(user.get("ethAddress"), user.get("username"))
   )));
 }

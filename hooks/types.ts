@@ -8,6 +8,7 @@ export interface Token {
 
 export interface Portfolio {
     userAddress: string;
+    username: string;
     value: number;
     change: number;
 }
@@ -20,4 +21,9 @@ export interface AssetInfo {
 export interface Attribute {
     trait_type: string;
     value: string;
+}
+
+export interface Swap {
+    tokenStaked: Token;
+    tokenWanted: Token;
 }
