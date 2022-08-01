@@ -9,7 +9,6 @@ import TokensPreview from './TokensPreview'
 import { getEllipsisTxt } from '../../../services/utils'
 
 import { Portfolio } from '../../../hooks/types'
-import { useMoralisCloudFunction, useMoralisQuery } from 'react-moralis'
 
 interface Props {
     portfolio: Portfolio;

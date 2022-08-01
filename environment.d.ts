@@ -7,6 +7,7 @@ declare global {
         ALPHA_VANTAGE_API_KEY: string;
         NEXT_PUBLIC_SERVER_URL: string;
         NEXT_PUBLIC_APP_ID: string;
+        NEXT_PUBLIC_IEX_API_KEY: string;
       }
     }
   }

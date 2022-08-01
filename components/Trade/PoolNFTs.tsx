@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Heading, SimpleGrid, VStack, Text, Skeleton } from '@chakra-ui/react'
+import { Heading, VStack, Text, Skeleton } from '@chakra-ui/react'
 
 import usePoolNFTs from '../../hooks/usePoolNFTs';
 
