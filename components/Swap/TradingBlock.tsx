@@ -14,6 +14,7 @@ const TradingBlock : FC = () => {
             spacing={4}
         >
             <Heading>Trading Block</Heading>
+            <Text>Tokens listed by users for trade.</Text>
             {
                 listedTokens.length > 0 ? (
                     listedTokens.map(token => (
