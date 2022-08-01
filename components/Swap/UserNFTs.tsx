@@ -1,19 +1,19 @@
 import { FC } from 'react'
 
-import { Heading, VStack, Text, Skeleton } from '@chakra-ui/react'
+import { Heading, VStack, Text, Skeleton, Button } from '@chakra-ui/react'
 
 import useUserNFTs from '../../hooks/useUserNFTs';
 import useList from '../../hooks/useList';
 
 import NFT from '../utilities/NFT';
-import ListButton from './ListButton';
+import ActionButtons from './ActionButtons';
 
 
 const UserNFTs : FC = ({ }) => {
 
     const { ownedNFTs, loading } = useUserNFTs(process.env.NEXT_PUBLIC_TOKEN_ADDRESS);
 
-    const { list, unlist, listedTokens } = useList();
+    const { list, unlist, listedTokens, createSwap, approveForAll, isApprovedForAll } = useList();
 
     return (
         <VStack
@@ -26,6 +26,15 @@ const UserNFTs : FC = ({ }) => {
             >
                 List your NFTs on the trading block, letting other players know you would like to trade an asset.
             </Text>
+            {
+                !isApprovedForAll && (
+                    <Button
+                        onClick={approveForAll}
+                    >
+                        Approve for All
+                    </Button>
+                )
+            }
             <Skeleton
                 isLoaded={!loading}
                 w='100%'
@@ -42,10 +51,11 @@ const UserNFTs : FC = ({ }) => {
                                     token={nft}
                                     width='40px'
                                     actionButtons={
-                                        <ListButton 
+                                        <ActionButtons 
                                             listed={Boolean(listedTokens.find((val) => nft.tokenId == val.tokenId))}
                                             listToken={() => list(nft.tokenId)}
                                             unlistToken={() => unlist(nft.tokenId)}
+                                            createSwap={(desiredTokenId : number) => createSwap(nft.tokenId, desiredTokenId)}
                                         />
                                     }
                                 />
