@@ -11,7 +11,7 @@ import {
   import Card from "../Card";
     
   import { Token } from "../../../hooks/types";
-import AssetPrice from '../AssetPrice';
+import AssetChange from '../AssetChange';
   
   interface Props {
     token: Token;
@@ -56,7 +56,7 @@ import AssetPrice from '../AssetPrice';
                 />
                 {
                     !compact && (
-                        <AssetPrice
+                        <AssetChange
                             symbol={token.symbol}
                         />
                     )

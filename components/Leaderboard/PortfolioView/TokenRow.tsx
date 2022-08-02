@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Box, HStack, Image, Text } from '@chakra-ui/react'
 
 import { Token } from '../../../hooks/types'
-import AssetPrice from '../../utilities/AssetPrice';
+import AssetChange from '../../utilities/AssetChange';
 
 interface Props {
     token: Token;
@@ -29,7 +29,7 @@ const TokenRow : FC<Props> = ({ token }) => {
         <Box 
             flex={1}
         />
-        <AssetPrice 
+        <AssetChange 
             symbol={token.symbol}
         />
     </HStack>

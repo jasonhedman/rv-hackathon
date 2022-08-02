@@ -8,3 +8,7 @@ export const getEllipsisTxt = (str : string, n = 6) => {
 export const round2 = (num : number) => {
     return Math.round(num * 100) / 100;
 }
+
+export const round = (num : number, precision = 2) => (
+  Math.round(num * Math.pow(10, precision)) / Math.pow(10, precision)
+)
