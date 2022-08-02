@@ -40,12 +40,17 @@ import AssetPrice from '../AssetPrice';
                         />
                     )
                 }
-                <Text
-                    color={textColor}
-                    fontWeight='bold'
-                >
-                    {token.name} ({token.symbol})
-                </Text>
+                <Box>
+                    <Text
+                        color={textColor}
+                        fontWeight='bold'
+                    >
+                        {token.name} ({token.symbol})
+                    </Text>
+                    <Text>
+                        Token #{token.tokenId}
+                    </Text>
+                </Box>
                 <Box 
                     flex={1}
                 />
