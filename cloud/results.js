@@ -23,14 +23,14 @@ const getUserSymbols = async (userAddress) => {
     address: userAddress,
     token_address: contractAddress,
   })
-  return userNFTs.result.map(nft => JSON.parse(nft.metadata).attributes.find(attr => attr.trait_type === "symbol").value);
+  return userNFTs.result.map(nft => JSON.parse(nft.metadata).attributes.find(attr => attr.trait_type === "Ticker").value);
 }
 
 const getCurrentPortfolioValue = async (tokenSymbols) => {
   const config = await Moralis.Config.get({useMasterKey: true});
   const iexAPIKey = config.get("iexAPIKey");
   const prices = await Promise.all(tokenSymbols.map(symbol => getCurrentPrice(symbol, iexAPIKey)));
-  return prices.reduce((acc, price) => acc + price, 0)
+  return round(prices.reduce((acc, price) => acc + price, 0))
 }
 
 const getOpenPortfolioValue = async (tokenSymbols) => {

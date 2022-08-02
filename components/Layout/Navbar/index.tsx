@@ -7,6 +7,7 @@ import {
   HStack,
   useColorMode,
   Text,
+  useColorModeValue
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
@@ -22,6 +23,7 @@ const Navbar : FC = () => {
     const router = useRouter()
 
     const { colorMode, toggleColorMode } = useColorMode();
+    const navbarBackground = useColorModeValue("secondaryGray.300", "navy.900");
 
     const isActive = (href: string) => {
         return router.pathname === href
@@ -34,6 +36,9 @@ const Navbar : FC = () => {
             position='fixed'
             justifyContent='space-between'
             px='1rem'
+            bg={navbarBackground}
+            opacity='1'
+            zIndex={10}
         >
             <HStack
                 spacing={8}

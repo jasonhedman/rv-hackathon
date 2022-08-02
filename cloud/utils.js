@@ -3,6 +3,7 @@ const getCurrentPrice = async (symbol, apiKey) => (
       url: `https://cloud.iexapis.com/stable/stock/${symbol}/quote/latestPrice?token=${apiKey}`
     })
       .then(res => res.data)
+      .catch(_ => 0)
 )
 
 const round = (num, precision = 2) => {

@@ -10,16 +10,15 @@ Moralis.Cloud.job("getETFOpenPrices", async () => {
     });
 
     const tickers = tokens.result.map(token => (
-        JSON.parse(token.metadata).attributes?.find(attr => attr.trait_type === "symbol")?.value 
+        JSON.parse(token.metadata).attributes?.find(attr => attr.trait_type === "Ticker")?.value 
     )).filter(Boolean);
 
-    const prices = await Promise.all(tickers.map(ticker => 
-        getCurrentPrice(ticker, config.get("iexAPIKey"))));
-
-    await Promise.all(prices.map(async (price, index) => {
+    for(const ticker of tickers) {
+        const currentPrice = await getCurrentPrice(ticker, config.get("iexAPIKey"));
         const etfOpen = new ETFOpen();
-        etfOpen.set("ticker", tickers[index]);
-        etfOpen.set("price", price);
-        return etfOpen.save();
-    }))
+        etfOpen.set("ticker", ticker);
+        etfOpen.set("price", currentPrice);
+        await etfOpen.save();
+    }
+
 })
