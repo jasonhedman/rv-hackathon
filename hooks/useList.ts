@@ -1,11 +1,13 @@
 import { useMoralisQuery, useNewMoralisObject, useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 
-import TokenABI from "../abis/Token.json";
 import SwapperABI from "../abis/Swapper.json";
+import useApprovalForAll from "./useApprovalForAll";
 
 const useList = () => {
 
     const { account } = useMoralis();
+
+    const { isApprovedForAll, approveForAll } = useApprovalForAll(process.env.NEXT_PUBLIC_SWAPPER_ADDRESS);
 
     const { data: userListings } = useMoralisQuery(
         "TradingBlock",
@@ -17,16 +19,6 @@ const useList = () => {
     )
 
     const { save } = useNewMoralisObject("TradingBlock")
-
-    const { data: isApprovedForAll, isLoading, error } = useWeb3ExecuteFunction({
-        contractAddress: process.env.NEXT_PUBLIC_TOKEN_ADDRESS,
-        abi: TokenABI,
-        functionName: "isApprovedForAll",
-        params: {
-            owner: account,
-            operator: process.env.NEXT_PUBLIC_SWAPPER_ADDRESS,
-        },
-    })
 
     const { fetch } = useWeb3ExecuteFunction();
 
@@ -65,20 +57,6 @@ const useList = () => {
                 params: {
                     _ownedTokenId: ownedTokenId,
                     _desiredTokenId: desiredTokenId,
-                }
-            }
-        })
-    }
-
-    const approveForAll = () => {
-        fetch({
-            params: {
-                contractAddress: process.env.NEXT_PUBLIC_TOKEN_ADDRESS,
-                abi: TokenABI,
-                functionName: "setApprovalForAll",
-                params: {
-                    operator: process.env.NEXT_PUBLIC_SWAPPER_ADDRESS,
-                    approved: true,
                 }
             }
         })

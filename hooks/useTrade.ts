@@ -2,41 +2,17 @@ import { useEffect, useState } from "react";
 import { useWeb3ExecuteFunction, useMoralis } from "react-moralis";
 
 import PoolABI from "../abis/Pool.json";
-import TokenABI from "../abis/Token.json";
+import useApprovalForAll from "./useApprovalForAll";
 
 const useTrade = () => {
-
-    const { account } = useMoralis();
 
     const [selectedOwnedToken, setSelectedOwnedToken] = useState<number | null>(null);
     const [selectedPoolToken, setSelectedPoolToken] = useState<number | null>(null)
     const [errorMessage, setErrorMessage] = useState<string>("");
 
+    const { isApprovedForAll, approveForAll } = useApprovalForAll(process.env.NEXT_PUBLIC_POOL_ADDRESS);
+
     const { fetch } = useWeb3ExecuteFunction();
-
-    const { data: isApprovedForAll, isLoading, error } = useWeb3ExecuteFunction({
-        contractAddress: process.env.NEXT_PUBLIC_TOKEN_ADDRESS,
-        abi: TokenABI,
-        functionName: "isApprovedForAll",
-        params: {
-            owner: account,
-            operator: process.env.NEXT_PUBLIC_POOL_ADDRESS,
-        },
-    })
-
-    const approveForAll = () => {
-        fetch({
-            params: {
-                contractAddress: process.env.NEXT_PUBLIC_TOKEN_ADDRESS,
-                abi: TokenABI,
-                functionName: "setApprovalForAll",
-                params: {
-                    operator: process.env.NEXT_PUBLIC_POOL_ADDRESS,
-                    approved: true,
-                }
-            }
-        })
-    }
 
     const selectOwnedToken = (tokenId : number ) => {
         setSelectedOwnedToken(tokenId);
