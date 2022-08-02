@@ -26,7 +26,7 @@ const PortfolioView : FC<Props> = ({ portfolio, place }) => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const changeColor = portfolio.change > 0 ? 'green.500' : portfolio.change < 0 ? 'red.500' : 'gray.500';
+    const changeColor = portfolio.changePercent > 0 ? 'green.500' : portfolio.changePercent < 0 ? 'red.500' : 'gray.500';
 
     return (
         <Card
@@ -67,14 +67,11 @@ const PortfolioView : FC<Props> = ({ portfolio, place }) => {
                     <Text>{getEllipsisTxt(portfolio.userAddress, 5)}</Text>
                 </VStack>
                 <Box flex={1}/>
-                <Text>
-                    ${portfolio.value}
-                </Text>
                 <Text
                     color={changeColor}
                     fontWeight='bold'
                 >
-                    {portfolio.change > 0 && "+"}{portfolio.change}%
+                    {portfolio.changePercent > 0 && "+"}{portfolio.changePercent}%
                 </Text>
                 <IconButton
                     aria-label='Show/Hide Tokens'

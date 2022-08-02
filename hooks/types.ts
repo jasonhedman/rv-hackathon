@@ -9,8 +9,7 @@ export interface Token {
 export interface Portfolio {
     userAddress: string;
     username: string;
-    value: number;
-    change: number;
+    changePercent: number;
 }
 
 export interface AssetInfo {

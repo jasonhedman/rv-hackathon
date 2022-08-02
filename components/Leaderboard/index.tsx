@@ -6,7 +6,7 @@ import PortfolioView from './PortfolioView'
 
 const Leaderboard = () => {
 
-    const { data } = useMoralisCloudFunction("getValuesAndChanges")
+    const { data } = useMoralisCloudFunction("getPortfolioChanges")
 
     return (
         <VStack

@@ -7,6 +7,11 @@ Moralis.Cloud.define('getValuesAndChanges', async () => {
   return valuesAndChanges.sort((a, b) => b.change - a.change);
 })
 
+Moralis.Cloud.define('getPortfolioChanges', async () => {
+  const changes = await getPortfolioChanges();
+  return changes.sort((a, b) => b.changePercent - a.changePercent);
+})
+
 const getUsers = async () => {
   const User = Moralis.Object.extend("_User");
   const query = new Moralis.Query(User);
@@ -73,5 +78,35 @@ const getPortfolioValuesAndChanges = async () => {
   const users = await getUsers();
   return Promise.all(users.map(async (user) => (
     getUserPortfolioValueAndChange(user.get("ethAddress"), user.get("username"))
+  )));
+}
+
+const getPortfolioChange = async (symbols) => {
+  const config = await Moralis.Config.get({useMasterKey: true});
+  const changes = await Promise.all(symbols.map(async symbol => {
+    const currentPrice = await getCurrentPrice(symbol, config.get('iexAPIKey'));
+    const ETFOpen = Moralis.Object.extend("ETFOpen");
+    const query = new Moralis.Query(ETFOpen);
+    query.equalTo("ticker", symbol).descending('createdAt').limit(1);
+    const open = await query.first();
+    return (currentPrice - open.get('price')) / (open.get('price') || 1) * 100;
+  }))
+  return round(changes.reduce((acc, price) => acc + price, 0), 4);
+}
+
+const getUserPortfolioChange = async (userAddress, username) => {
+  const symbols = await getUserSymbols(userAddress);
+  const changePercent = await getPortfolioChange(symbols);
+  return {
+    changePercent,
+    username,
+    userAddress
+  }
+}
+
+const getPortfolioChanges = async () => {
+  const users = await getUsers();
+  return Promise.all(users.map(async (user) => (
+    getUserPortfolioChange(user.get('ethAddress'), user.get('username'))
   )));
 }
