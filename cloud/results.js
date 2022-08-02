@@ -52,7 +52,7 @@ const getUserPortfolioValueAndChange = async (userAddress, username) => {
   const value = await getCurrentPortfolioValue(symbols);
   return {
     value,
-    change: round((value - open) / open, 4) || 0,
+    change: round((value - open) / open * 100, 4) || 0,
     userAddress,
     username
   }
