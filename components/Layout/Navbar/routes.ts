@@ -8,6 +8,10 @@ const routes = [
         href: '/swap',
     },
     {
+        name: 'Draft',
+        href: '/draft',
+    },
+    {
         name: 'Leaderboard',
         href: '/leaderboard',
     },

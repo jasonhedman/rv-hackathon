@@ -9,12 +9,12 @@ import SelectButton from './SelectButton';
 
 interface Props {
     contractAddress: string;
-    selectedTokens: number[];
+    selectedToken: number | null;
     selectToken: (tokenId : number) => void;
     unselectToken: (tokenId : number) => void;
 }
 
-const PoolNFTs : FC<Props> = ({ contractAddress, selectedTokens, selectToken, unselectToken }) => {
+const PoolNFTs : FC<Props> = ({ contractAddress, selectedToken, selectToken, unselectToken }) => {
 
     const { ownedNFTs, loading } = usePoolNFTs(contractAddress);
 
@@ -41,7 +41,7 @@ const PoolNFTs : FC<Props> = ({ contractAddress, selectedTokens, selectToken, un
                                     width='40px'
                                     actionButtons={
                                         <SelectButton 
-                                            selected={selectedTokens.includes(nft.tokenId)}
+                                            selected={selectedToken === nft.tokenId}
                                             selectToken={() => selectToken(nft.tokenId)}
                                             unselectToken={() => unselectToken(nft.tokenId)}
                                         />

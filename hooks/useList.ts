@@ -16,9 +16,9 @@ const useList = () => {
         }
     )
 
-    const { save, isSaving } = useNewMoralisObject("TradingBlock")
+    const { save } = useNewMoralisObject("TradingBlock")
 
-    const { data: isApprovedForAll } = useWeb3ExecuteFunction({
+    const { data: isApprovedForAll, isLoading, error } = useWeb3ExecuteFunction({
         contractAddress: process.env.NEXT_PUBLIC_TOKEN_ADDRESS,
         abi: TokenABI,
         functionName: "isApprovedForAll",

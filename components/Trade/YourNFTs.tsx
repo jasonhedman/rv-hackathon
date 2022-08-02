@@ -9,14 +9,14 @@ import SelectButton from './SelectButton';
 
 interface Props {
     contractAddress: string;
-    selectedTokens: number[];
+    selectedToken: number | null;
     errorMessage: string;
     selectToken: (tokenId : number) => void;
     unselectToken: (tokenId : number) => void;
     trade: () => void
 }
 
-const YourNFTs : FC<Props> = ({ contractAddress, selectedTokens, errorMessage, selectToken, unselectToken, trade }) => {
+const YourNFTs : FC<Props> = ({ contractAddress, selectedToken, errorMessage, selectToken, unselectToken, trade }) => {
 
     const { ownedNFTs, loading } = useUserNFTs(contractAddress);
 
@@ -45,7 +45,7 @@ const YourNFTs : FC<Props> = ({ contractAddress, selectedTokens, errorMessage, s
                                             width='40px'
                                             actionButtons={
                                                 <SelectButton 
-                                                    selected={selectedTokens.includes(nft.tokenId)}
+                                                    selected={selectedToken === nft.tokenId}
                                                     selectToken={() => selectToken(nft.tokenId)}
                                                     unselectToken={() => unselectToken(nft.tokenId)}
                                                 />

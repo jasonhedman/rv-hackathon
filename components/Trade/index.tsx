@@ -11,8 +11,8 @@ interface Props {
 const Trade : FC<Props> = ({ contractAddress }) => {
 
   const {
-    selectedOwnedTokens,
-    selectedPoolTokens,
+    selectedOwnedToken,
+    selectedPoolToken,
     errorMessage,
     selectOwnedToken,
     unselectOwnedToken,
@@ -27,7 +27,7 @@ const Trade : FC<Props> = ({ contractAddress }) => {
     >
       <YourNFTs 
         contractAddress={contractAddress}
-        selectedTokens={selectedOwnedTokens}
+        selectedToken={selectedOwnedToken}
         selectToken={selectOwnedToken}
         unselectToken={unselectOwnedToken}
         errorMessage={errorMessage}
@@ -35,7 +35,7 @@ const Trade : FC<Props> = ({ contractAddress }) => {
       />
       <PoolNFTs
         contractAddress={contractAddress}
-        selectedTokens={selectedPoolTokens}
+        selectedToken={selectedPoolToken}
         selectToken={selectPoolToken}
         unselectToken={unselectPoolToken}
       />

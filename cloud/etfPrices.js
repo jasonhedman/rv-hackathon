@@ -14,7 +14,7 @@ Moralis.Cloud.job("getETFOpenPrices", async () => {
     )).filter(Boolean);
 
     const prices = await Promise.all(tickers.map(ticker => 
-        getCurrentPrice(ticker, config.get("alphaVantageKey"))));
+        getCurrentPrice(ticker, config.get("iexAPIKey"))));
 
     await Promise.all(prices.map(async (price, index) => {
         const etfOpen = new ETFOpen();

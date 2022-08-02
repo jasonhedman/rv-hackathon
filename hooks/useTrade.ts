@@ -1,49 +1,47 @@
 import { useEffect, useState } from "react";
 
 const useTrade = () => {
-    
-    const [selectedOwnedTokens, setSelectedOwnedTokens] = useState<number[]>([]);
+
+    const [selectedOwnedToken, setSelectedOwnedToken] = useState<number | null>(null);
+    const [selectedPoolToken, setSelectedPoolToken] = useState<number | null>(null)
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const selectOwnedToken = (tokenId : number ) => {
-        setSelectedOwnedTokens([...selectedOwnedTokens, tokenId]);
+        setSelectedOwnedToken(tokenId);
     }
 
     const unselectOwnedToken = (tokenId : number) => {
-        setSelectedOwnedTokens(selectedOwnedTokens.filter(id => id !== tokenId));
+        setSelectedOwnedToken(null);
     }
 
-    const [selectedPoolTokens, setSelectedPoolTokens] = useState<number[]>([])
 
     const selectPoolToken = (tokenId : number ) => {
-        setSelectedPoolTokens([...selectedPoolTokens, tokenId]);
+        setSelectedPoolToken(tokenId);
     }
 
     const unselectPoolToken = (tokenId : number) => {
-        setSelectedPoolTokens(selectedPoolTokens.filter(token => token !== tokenId))
+        setSelectedPoolToken(null)
     }
 
     useEffect(() => {
-        if(selectedOwnedTokens.length === 0) {
-            setErrorMessage("Please select at least one token");
-        } else if(selectedOwnedTokens.length > 3) {
-            setErrorMessage("Please select at most 3 tokens");
-        } else if(selectedOwnedTokens.length !== selectedPoolTokens.length) {
-            setErrorMessage("You must swap an equal number of tokens");
+        if(selectedOwnedToken === null) {
+            setErrorMessage("Select a token to trade");
+        } else if(selectedPoolToken === null) {
+            setErrorMessage("Select a token to receive");
         } else {
             setErrorMessage("");
         }
-    }, [selectedOwnedTokens, selectedPoolTokens]);
+    }, [selectedOwnedToken, selectedPoolToken]);
 
     const trade = () => {
-        console.log(selectedOwnedTokens, selectedPoolTokens);
+        console.log(selectedPoolToken, selectedOwnedToken);
     }
 
     return {
-        selectedOwnedTokens,
+        selectedOwnedToken,
+        selectedPoolToken,
         selectOwnedToken,
         unselectOwnedToken,
-        selectedPoolTokens,
         selectPoolToken,
         unselectPoolToken,
         trade,
