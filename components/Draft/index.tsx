@@ -31,6 +31,7 @@ const Draft : FC = () => {
                                         Draft
                                     </Button>
                                 }
+                                compact
                             />
                         ))
                     ) : (

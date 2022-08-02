@@ -7,6 +7,7 @@ import useOwnedNFTs from "./useOwnedNFTs";
 import { Swap, Attribute } from "./types";
 
 import SwapperABI from "../abis/Swapper.json";
+import { parseMetadata } from "../services/metadata";
 
 const useActiveSwaps = () => {
 
@@ -39,17 +40,11 @@ const useActiveSwaps = () => {
                     token_id: tokenId,
                 })
             }))
-            setActiveSwaps(metadata.map((metadataObj, index) => {
-                const metadata = metadataObj.metadata ? JSON.parse(metadataObj.metadata) : {};
+            const tokensWanted = parseMetadata(metadata);
+            setActiveSwaps(tokensWanted.map((tokenWanted, index) => {
                 return {
                     tokenStaked: ownedNFTs[index],
-                    tokenWanted: {
-                        tokenId: parseInt(metadataObj.token_id),
-                        name: metadata.name || "",
-                        contractAddress: metadataObj.token_address,
-                        image: getLink(metadata.image) || "",
-                        symbol: metadata.attributes.find((attr : Attribute) => attr.trait_type === "symbol")?.value || "",
-                    }
+                    tokenWanted
                 }
             }))
         }

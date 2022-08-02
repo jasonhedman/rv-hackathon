@@ -38,7 +38,7 @@ const PoolNFTs : FC<Props> = ({ contractAddress, selectedToken, selectToken, uns
                                 <NFT 
                                     key={`${nft.contractAddress}-${nft.tokenId}`}
                                     token={nft}
-                                    width='40px'
+                                    compact
                                     actionButtons={
                                         <SelectButton 
                                             selected={selectedToken === nft.tokenId}

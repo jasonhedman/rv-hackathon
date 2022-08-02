@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useMoralis, useMoralisQuery } from "react-moralis";
 import { getLink } from "../services/ipfs";
+import { parseMetadata } from "../services/metadata";
 
 import { Token, Attribute } from "./types";
 
@@ -29,16 +30,7 @@ const useTradingBlock = () => {
                     token_id: listing.get('tokenId'),
                 })
             })))
-            setListedTokens(metadata.map(m => {
-                const metadata = m.metadata && JSON.parse(m.metadata);
-                return {
-                    tokenId: parseInt(m.token_id),
-                    contractAddress: m.token_address,
-                    name: metadata.name,
-                    symbol: metadata.attributes.find((attr : Attribute) => attr.trait_type == 'symbol').value,
-                    image: getLink(metadata.image)
-                }
-            }))
+            setListedTokens(parseMetadata(metadata))
         }
         if(activeListings.length > 0) {
             getMetadata();

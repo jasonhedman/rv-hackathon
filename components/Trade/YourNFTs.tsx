@@ -11,12 +11,14 @@ interface Props {
     contractAddress: string;
     selectedToken: number | null;
     errorMessage: string;
+    isApprovedForAll: boolean;
+    approveForAll: () => void;
     selectToken: (tokenId : number) => void;
     unselectToken: (tokenId : number) => void;
     trade: () => void
 }
 
-const YourNFTs : FC<Props> = ({ contractAddress, selectedToken, errorMessage, selectToken, unselectToken, trade }) => {
+const YourNFTs : FC<Props> = ({ contractAddress, selectedToken, errorMessage, isApprovedForAll, approveForAll, selectToken, unselectToken, trade }) => {
 
     const { ownedNFTs, loading } = useUserNFTs(contractAddress);
 
@@ -26,6 +28,15 @@ const YourNFTs : FC<Props> = ({ contractAddress, selectedToken, errorMessage, se
             w='100%'
         >
             <Heading>Your NFTs</Heading>
+            {
+                !isApprovedForAll && (
+                    <Button
+                        onClick={approveForAll}
+                    >
+                        Approve for All
+                    </Button>
+                )
+            }
             <Skeleton
                 isLoaded={!loading}
                 w='100%'

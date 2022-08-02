@@ -30,12 +30,16 @@ import AssetPrice from '../AssetPrice';
             <HStack 
                 spacing={4}
             >
-                <Image
-                    alt="NFT image"
-                    src={token.image}
-                    borderRadius='20px'
-                    w={width || '40px'}
-                />
+                {
+                    !compact && (
+                        <Image
+                            alt="NFT image"
+                            src={token.image}
+                            borderRadius='20px'
+                            w={width || '40px'}
+                        />
+                    )
+                }
                 <Text
                     color={textColor}
                     fontWeight='bold'
@@ -43,19 +47,17 @@ import AssetPrice from '../AssetPrice';
                 >
                     {token.name} ({token.symbol})
                 </Text>
+                <Box 
+                    flex={1}
+                />
                 {
                     !compact && (
-                        <>
-                            <Box 
-                                flex={1}
-                            />
-                            <AssetPrice
-                                symbol={token.symbol}
-                            />
-                            {actionButtons}
-                        </>
+                        <AssetPrice
+                            symbol={token.symbol}
+                        />
                     )
                 }
+                {actionButtons}
             </HStack>
         </Card>
     );

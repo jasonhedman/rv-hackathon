@@ -14,6 +14,8 @@ const Trade : FC<Props> = ({ contractAddress }) => {
     selectedOwnedToken,
     selectedPoolToken,
     errorMessage,
+    isApprovedForAll,
+    approveForAll,
     selectOwnedToken,
     unselectOwnedToken,
     selectPoolToken,
@@ -31,6 +33,8 @@ const Trade : FC<Props> = ({ contractAddress }) => {
         selectToken={selectOwnedToken}
         unselectToken={unselectOwnedToken}
         errorMessage={errorMessage}
+        isApprovedForAll={Boolean(isApprovedForAll)}
+        approveForAll={approveForAll}
         trade={trade}
       />
       <PoolNFTs

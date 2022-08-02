@@ -13,7 +13,7 @@ const useDraft = () => {
     const withdraw = async (tokenId: number) => {
         await fetch({
             params: {
-                contractAddress: process.env.NEXT_PUBLIC_TOKEN_ADDRESS,
+                contractAddress: process.env.NEXT_PUBLIC_POOL_ADDRESS,
                 functionName: "Withdraw",
                 abi: PoolABI,
                 params: {
