@@ -1,4 +1,4 @@
-import { Token } from "../hooks/types";
+import { Token, Attribute } from "../hooks/types";
 
 interface TokenMetadata {
     token_id: string;
@@ -11,10 +11,10 @@ export const parseMetadata = (res: TokenMetadata[]) : Token[] => {
         const metadata = nftObj?.metadata ? JSON.parse(nftObj.metadata) : {};
         return {
             tokenId: parseInt(nftObj?.token_id),
-            name: metadata.assetName || "",
+            name: metadata.name || "",
             contractAddress: nftObj.token_address,
             image: metadata.image || "",
-            symbol: metadata.ticker || "",
+            symbol: metadata.attributes.find((attr : Attribute) => attr.trait_type === 'Ticker').value || "",
         }
     })
 }
