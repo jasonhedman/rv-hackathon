@@ -9,7 +9,7 @@ export const getCurrentPrice = async (symbol: string) : Promise<AssetInfo | null
             }
             return {
                 price: data.latestPrice,
-                changePercent: data.changePercent
+                changePercent: data.changePercent * 100
             };
         })
 }
