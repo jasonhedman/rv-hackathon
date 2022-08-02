@@ -27,7 +27,7 @@ const PageContainer : FC<Props> = ({ children }) => {
             flex={1}
             display='flex'
             flexDirection='column'
-            py={navbarHeight}
+            py={'6rem'}
             justifyContent='center'
             maxW='2xl'
         >

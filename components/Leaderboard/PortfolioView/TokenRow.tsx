@@ -18,9 +18,8 @@ const TokenRow : FC<Props> = ({ token }) => {
         <Image
             alt="NFT image"
             src={token.image}
-            h='40px'
             w='40px'
-            borderRadius='10px'
+            borderRadius='8px'
         />
         <Text
             fontWeight='bold'
