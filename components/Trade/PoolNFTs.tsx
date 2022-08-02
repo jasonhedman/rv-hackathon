@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { useState, FC } from 'react'
 
-import { Heading, VStack, Text, Skeleton } from '@chakra-ui/react'
+import { Heading, VStack, Text, Skeleton, Input } from '@chakra-ui/react'
 
 import usePoolNFTs from '../../hooks/usePoolNFTs';
 
@@ -18,6 +18,8 @@ const PoolNFTs : FC<Props> = ({ contractAddress, selectedToken, selectToken, uns
 
     const { ownedNFTs, loading } = usePoolNFTs(contractAddress);
 
+    const [filter, setFilter] = useState('');
+
     return (
         <VStack
             spacing={4}
@@ -29,25 +31,31 @@ const PoolNFTs : FC<Props> = ({ contractAddress, selectedToken, selectToken, uns
                 w='100%'
             >
                 <VStack
-                    spacing={4}
                     w='100%'
                 >
+                    <Input
+                        placeholder='Symbol'
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
+                    />
                     {
                         ownedNFTs.length > 0 ? (
-                            ownedNFTs.map(nft => (
-                                <NFT 
-                                    key={`${nft.contractAddress}-${nft.tokenId}`}
-                                    token={nft}
-                                    compact
-                                    actionButtons={
-                                        <SelectButton 
-                                            selected={selectedToken === nft.tokenId}
-                                            selectToken={() => selectToken(nft.tokenId)}
-                                            unselectToken={() => unselectToken(nft.tokenId)}
-                                        />
-                                    }
-                                />
-                            ))
+                            ownedNFTs
+                                .filter(nft => filter === '' || nft.symbol.toLowerCase().includes(filter.toLowerCase()))
+                                .map(nft => (
+                                    <NFT 
+                                        key={`${nft.contractAddress}-${nft.tokenId}`}
+                                        token={nft}
+                                        compact
+                                        actionButtons={
+                                            <SelectButton 
+                                                selected={selectedToken === nft.tokenId}
+                                                selectToken={() => selectToken(nft.tokenId)}
+                                                unselectToken={() => unselectToken(nft.tokenId)}
+                                            />
+                                        }
+                                    />
+                                ))
                         ) : (
                             <Text>The pool does not own any NFTs from this collection</Text>
                         )
