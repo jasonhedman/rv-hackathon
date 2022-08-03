@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 
 import { useMoralis, useMoralisQuery } from "react-moralis";
-import { getLink } from "../services/ipfs";
+
 import { parseMetadata } from "../services/metadata";
 
-import { Token, Attribute } from "./types";
+import { Token } from "./types";
+
+interface ListedToken extends Token {
+    username: string;
+}
 
 const useTradingBlock = () => {
 
@@ -19,7 +23,7 @@ const useTradingBlock = () => {
         }
     )
 
-    const [listedTokens, setListedTokens] = useState<Token[]>([]);
+    const [listedTokens, setListedTokens] = useState<ListedToken[]>([]);
 
     useEffect(() => {
         const getMetadata = async () => {
@@ -30,7 +34,7 @@ const useTradingBlock = () => {
                     token_id: listing.get('tokenId'),
                 })
             })))
-            setListedTokens(parseMetadata(metadata))
+            setListedTokens(parseMetadata(metadata).map((token, index) => ({ ...token, username: activeListings[index].get('userUsername') })))
         }
         if(activeListings.length > 0) {
             getMetadata();

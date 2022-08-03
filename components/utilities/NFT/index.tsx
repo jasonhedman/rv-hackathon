@@ -18,11 +18,13 @@ import AssetChange from '../AssetChange';
     actionButtons?: React.ReactNode;
     width?: string;
     compact?: boolean;
+    username?: string;
   }
   
-  const NFT : FC<Props> = ({ token, actionButtons, width, compact }) => {
+  const NFT : FC<Props> = ({ token, actionButtons, width, compact, username }) => {
   
     const textColor = useColorModeValue("navy.700", "white");
+    
     return (
         <Card
             w='100%'
@@ -50,6 +52,15 @@ import AssetChange from '../AssetChange';
                     <Text>
                         Token #{token.tokenId}
                     </Text>
+                    {
+                        username && (
+                            <Text
+                                fontWeight='bold'
+                            >
+                                {username}
+                            </Text>
+                        )
+                    }
                 </Box>
                 <Box 
                     flex={1}

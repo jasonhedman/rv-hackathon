@@ -6,14 +6,12 @@ import useUserNFTs from '../../hooks/useUserNFTs';
 import useList from '../../hooks/useList';
 
 import NFT from '../utilities/NFT';
-import ActionButtons from './ActionButtons';
-
 
 const UserNFTs : FC = ({ }) => {
 
     const { ownedNFTs, loading } = useUserNFTs(process.env.NEXT_PUBLIC_TOKEN_ADDRESS);
 
-    const { list, unlist, listedTokens, createSwap, approveForAll, isApprovedForAll } = useList();
+    const { list, unlist, listedTokens, approveForAll, isApprovedForAll } = useList();
 
     return (
         <VStack
@@ -51,12 +49,15 @@ const UserNFTs : FC = ({ }) => {
                                     token={nft}
                                     width='40px'
                                     actionButtons={
-                                        <ActionButtons 
-                                            listed={Boolean(listedTokens.find((val) => nft.tokenId == val.tokenId))}
-                                            listToken={() => list(nft.tokenId)}
-                                            unlistToken={() => unlist(nft.tokenId)}
-                                            createSwap={(desiredTokenId : number) => createSwap(nft.tokenId, desiredTokenId)}
-                                        />
+                                        <Button
+                                            onClick={
+                                                Boolean(listedTokens.find((val) => nft.tokenId == val.tokenId)) 
+                                                    ? () => unlist(nft.tokenId) 
+                                                    : () => list(nft.tokenId)
+                                            }
+                                        >
+                                            {listedTokens.find((val) => nft.tokenId == val.tokenId) ? "Unlist" : "List"}
+                                        </Button>
                                     }
                                 />
                             ))

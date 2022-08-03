@@ -1,17 +1,16 @@
-import { useMoralisQuery, useNewMoralisObject, useMoralis, useWeb3ExecuteFunction } from "react-moralis";
+import { useMoralisQuery, useNewMoralisObject, useMoralis } from "react-moralis";
 
-import SwapperABI from "../abis/Swapper.json";
 import useApprovalForAll from "./useApprovalForAll";
 
 const useList = () => {
 
-    const { account } = useMoralis();
+    const { user } = useMoralis();
 
     const { isApprovedForAll, approveForAll } = useApprovalForAll(process.env.NEXT_PUBLIC_SWAPPER_ADDRESS);
 
     const { data: userListings } = useMoralisQuery(
         "TradingBlock",
-        query => query.equalTo("userAddress", account).equalTo("active", true),
+        query => query.equalTo("userAddress", user?.get('ethAddress')).equalTo("active", true),
         [],
         {
             live: true,
@@ -19,8 +18,6 @@ const useList = () => {
     )
 
     const { save } = useNewMoralisObject("TradingBlock")
-
-    const { fetch } = useWeb3ExecuteFunction();
 
     const list = async (tokenId : number) => {
         const listing = userListings.find(l => l.get('tokenId') === tokenId);
@@ -32,7 +29,8 @@ const useList = () => {
         } else {
             await save({
                 tokenId,
-                userAddress: account,
+                userAddress: user?.get('ethAddress'),
+                userUsername: user?.get('username'),
                 active: true,
             })
         }
@@ -48,20 +46,6 @@ const useList = () => {
         }
     }
 
-    const createSwap = async (ownedTokenId : number, desiredTokenId : number) => {
-        await fetch({
-            params: {
-                contractAddress: process.env.NEXT_PUBLIC_SWAPPER_ADDRESS,
-                abi: SwapperABI,
-                functionName: "depositForSwapping",
-                params: {
-                    _ownedTokenId: ownedTokenId,
-                    _desiredTokenId: desiredTokenId,
-                }
-            }
-        })
-    }
-
     return {
         listedTokens: userListings.map(listing => ({
             id: listing.id,
@@ -69,7 +53,6 @@ const useList = () => {
         })),
         list,
         unlist,
-        createSwap,
         isApprovedForAll,
         approveForAll,
     }

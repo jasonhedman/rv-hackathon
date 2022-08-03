@@ -6,7 +6,7 @@ interface TokenMetadata {
     metadata?: string;
 }
 
-export const parseMetadata = (res: TokenMetadata[]) : Token[] => {
+export const parseMetadata = (res: TokenMetadata[], username = "") : Token[] => {
     return res.map((nftObj) => {
         const metadata = nftObj?.metadata ? JSON.parse(nftObj.metadata) : {};
         return {
@@ -15,6 +15,7 @@ export const parseMetadata = (res: TokenMetadata[]) : Token[] => {
             contractAddress: nftObj.token_address,
             image: metadata.image || "",
             symbol: metadata.attributes.find((attr : Attribute) => attr.trait_type === 'Ticker').value || "",
+            username,
         }
     })
 }

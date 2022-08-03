@@ -91,7 +91,7 @@ const getPortfolioChange = async (symbols) => {
     const open = await query.first();
     return (currentPrice - open.get('price')) / (open.get('price') || 1) * 100;
   }))
-  return round(changes.reduce((acc, price) => acc + price, 0), 4);
+  return round((changes.reduce((acc, price) => acc + price, 0) / changes.length), 4);
 }
 
 const getUserPortfolioChange = async (userAddress, username) => {

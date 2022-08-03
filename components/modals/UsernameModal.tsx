@@ -29,30 +29,32 @@ const UsernameModal : FC<Props> = ({ isOpen, onClose}) => {
         >
             <ModalOverlay />
             <ModalContent>
-            <ModalHeader>Edit Username</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-                <Input 
-                    placeholder='Username'
-                    value={username}
-                    onChange={handleChange}
-                />
-            </ModalBody>
-            <ModalFooter>
-                <Button 
-                    colorScheme='ghost' 
-                    mr={3} 
-                    onClick={onClose}
-                >
-                    Close
-                </Button>
-                <Button 
-                    variant='brand'
-                    onClick={async () => {await onSubmit(); onClose();}}
-                >
-                    Submit
-                </Button>
-            </ModalFooter>
+                <ModalHeader>
+                    Edit Username
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Input 
+                        placeholder='Username'
+                        value={username}
+                        onChange={handleChange}
+                    />
+                </ModalBody>
+                <ModalFooter>
+                    <Button 
+                        colorScheme='ghost' 
+                        mr={3} 
+                        onClick={onClose}
+                    >
+                        Close
+                    </Button>
+                    <Button 
+                        variant='brand'
+                        onClick={async () => {await onSubmit(); onClose();}}
+                    >
+                        Submit
+                    </Button>
+                </ModalFooter>
             </ModalContent>
         </Modal>
     )

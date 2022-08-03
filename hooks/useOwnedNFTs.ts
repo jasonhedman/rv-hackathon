@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useMoralis } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 import { parseMetadata } from "../services/metadata";
 
 import { Token } from "./types";
